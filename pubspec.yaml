@@ -30,7 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   time_range_picker: ^2.0.1
   numberpicker: ^2.1.1
-
+  flutter_blue: ^0.8.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -47,7 +48,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+  - imgs/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
