@@ -31,7 +31,9 @@ dependencies:
   time_range_picker: ^2.0.1
   numberpicker: ^2.1.1
   flutter_blue: ^0.8.0
-  
+  provider: ^5.0.0
+  flutter_switch: ^0.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

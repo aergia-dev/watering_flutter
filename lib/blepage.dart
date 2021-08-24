@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:watering/mainpage.dart';
-//import 'package:flutter_blue/gen/flutterblue.pbserver.dart';
-// import 'package:flutter_blue/gen/flutterblue.pb.dart';
+import 'blefuncs.dart';
 
 class Ble extends StatefulWidget {
   const Ble({Key? key}) : super(key: key);
@@ -15,18 +14,27 @@ class Ble extends StatefulWidget {
 
 class _BleState extends State<Ble> {
   StreamSubscription scanResultListener =
-      FlutterBlue.instance.scanResults.listen((results) {
-    if (results.last.device.name == 'SleepLight') {
-      results.last.device.connect();
+      FlutterBlue.instance.scanResults.listen((results) async {
+    if (results.length > 0 && results.last.device.name == 'SleepLight') {
+      BluetoothDevice device = results.last.device;
+
+      await device.connect();
+
+      print('trying connect ${results.last.device.name}');
     }
   });
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-
     FlutterBlue.instance.startScan(timeout: Duration(seconds: 5));
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scanResultListener.cancel();
+    super.dispose();
   }
 
   @override
@@ -43,13 +51,15 @@ class _BleState extends State<Ble> {
               style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
             ),
             StreamBuilder<List<BluetoothDevice>>(
-              stream: Stream.periodic(Duration(milliseconds: 100))
+              stream: Stream.periodic(Duration(milliseconds: 1000))
                   .asyncMap((_) => FlutterBlue.instance.connectedDevices),
               initialData: [],
               builder: (c, snapshot) {
                 if (snapshot.data!.isNotEmpty) {
                   return ElevatedButton(
                     onPressed: () {
+                      // BleFuncs.instance.initDevice(snapshot.data!.last);
+                      BleFuncs.instance.initDevice(snapshot.data!.last);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => MainPage()));
                     },
