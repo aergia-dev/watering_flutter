@@ -33,7 +33,9 @@ dependencies:
   flutter_blue: ^0.8.0
   provider: ^5.0.0
   flutter_switch: ^0.3.2
-
+  cron: ^0.3.2
+  synchronized: ^3.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
